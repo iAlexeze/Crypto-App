@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crypto Price Dashboard</title>
+  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"> -->
+  <style>
+    /* CSS styles */
+    body {
+      font-family: 'Georgia', 'Helvetica', 'sans-serif';
+      background-color: hsl(20, 30%, 80%);
+      margin: 0;
+      padding: 20px;
+      align-items: center;
+    }
+    h1 {
+      color: #333333;
+    }
+    .crypto-card {
+      background-color: #ffffff;
+      padding: 0;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .crypto-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .crypto-price {
+      font-size: 24px;
+      color: blueviolet;
+      margin-top: 5px;
+
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group input[type="email"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      background-color: blueviolet;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: darkolivegreen;
+    }
+
+    .success-message {
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 20px;
+      color: #000000;
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+    h1 {
+      color: #333333;
+      text-align: center; /* Center-align the heading */
+    }
+    h3 {
+      /* color: #333333; */
+      text-align: center; /* Center-align the heading */
+    }
+    /* .logo {
+            margin-top: 10px;
+            align-items: center;
+        } */
+  </style>
+</head>
+<body>
+  <div style="margin:auto;width:20%;">
+    <!-- Replace "logo.png" with the path to your logo image -->
+    <img width="200" height="auto" src="../static/logo.png" alt="logo">
+</div>
+<h1>Today's Crypto Price</h1>
+  <div class="crypto-card">
+    <h2 class="crypto-name">BTC</h2>
+    <p class="crypto-price" id="bitcoin-price">$</p>
+  </div>
+  <div class="crypto-card">
+    <h2 class="crypto-name">ETH</h2>
+    <p class="crypto-price" id="ethereum-price">$</p>
+  </div>
+  <div class="crypto-card">
+    <h2 class="crypto-name">BNB</h2>
+    <p class="crypto-price" id="bnb-price">$</p>
+  </div>
+  <div class="crypto-card">
+    <h2 class="crypto-name">XRP</h2>
+    <p class="crypto-price" id="xrp-price">$</p>
+  </div>
+ 
+  <div style="margin:auto;width:40%" >
+  <p style="color: blueviolet;"><em>Website processed by container: {{ hostname }} with IP: {{ ip }}</em></p>
+  </div>
+  <hr>
+  <hr>
+  <div class="container">
+    <div class="form-group">
+    <h3><em>Subscribe for our weekly newsletter:</em></h3>
+      <label for="name">Name*</label>
+      <input type="text" id="name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number*</label>
+      <input type="tel" id="phone" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address*</label>
+      <input type="email" id="email" required>
+    </div>
+    <div class="form-group">
+      <label for="favorite-coin">Favorite Coin*</label>
+      <select id="favorite-coin" required>
+        <option value="">Select...</option>
+        <option value="bitcoin">BTC</option>
+        <option value="ethereum">ETH</option>
+        <option value="bnb">BNB</option>
+        <option value="xrp">XRP</option>
+        <option value="kucoin">KCS</option>
+        <option value="cardano">ADA</option>
+        <option value="solana">SOL</option>
+        <option value="tron">TRX</option>
+      </select>
+        </div>
+    <div class="form-group">
+      <label for="comment">Leave a Comment</label>
+      <textarea id="comment"></textarea>
+    </div>
+    <button id="submit-btn" class="submit-btn">Submit</button>
+    <div id="success-message" class="success-message"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // JavaScript code
+    $(document).ready(function() {
+      // Fetch crypto prices using an API endpoint
+      fetch('/api/crypto-prices')
+        .then(response => response.json())
+        .then(data => {
+          // Update the prices on the dashboard
+          document.getElementById('bitcoin-price').textContent = '$' + data.bitcoin;
+          document.getElementById('ethereum-price').textContent = '$' + data.ethereum;
+          document.getElementById('bnb-price').textContent = '$' + data.bnb;
+          document.getElementById('xrp-price').textContent = '$' + data.xrp;
+          document.getElementById('kucoin-price').textContent = '$' + data.kucoin;
+          document.getElementById('cardano-price').textContent = '$' + data.cardano;
+          document.getElementById('solana-price').textContent = '$' + data.solana;
+          document.getElementById('tron-price').textContent = '$' + data.tron;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+      // Submit form event handler
+      $('#submit-btn').click(function() {
+        // Get form values
+        var name = $('#name').val();
+        var phone = $('#phone').val();
+        var email = $('#email').val();
+        var favoriteCoin = $('#favorite-coin').val();
+        var comment = $('#comment').val();
+
+        // Validate form inputs
+        if (name.trim() === '' || phone.trim() === '' || email.trim() === '' || favoriteCoin.trim() === '') {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        // Send form data to the server (you can modify this part as needed)
+        $.ajax({
+          type: 'POST',
+          url: '/submit-form',
+          data: {
+            name: name,
+            phone: phone,
+            email: email,
+            favoriteCoin: favoriteCoin,
+            comment: comment
+          },
+          success: function() {
+            // Clear form inputs
+            $('#name').val('');
+            $('#phone').val('');
+            $('#email').val('');
+            $('#favorite-coin').val('');
+            $('#comment').val('');
+
+            // Show success message
+            $('#success-message').text('Thank you for visiting us! See you soon.');
+          },
+          error: function() {
+            alert('An error occurred while submitting the form. Please try again.');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
