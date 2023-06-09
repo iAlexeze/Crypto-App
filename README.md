@@ -46,7 +46,7 @@ This will start a Docker container based on the  my-crypto-app image and map por
 
 ## Access the web application in your browser:
 
-http://localhost:5000 or http://<Node-IP>:31000 
+http://localhost:5000  (you can replace the **localhost** with your **Node_IP** if your kubernetes cluster is in the cloud)
  
 You should see a web page displaying the current prices of top cryptocurrencies.
 Also, you would see the container ID of the docker container running the application as well as the your IP address 
@@ -57,7 +57,7 @@ Kubectl apply -f k8s.yml
 
 This will create a new deployment named **crypto-prices** as well as a Nodeport service named **crypto-svc** for external access
 
-Access the application using http://localhost:31000 or http://<Node-IP>:31000 
+Access the application using http://localhost:31000  (you can replace the **localhost** with your **Node_IP** if your kubernetes cluster is in the cloud) 
 
 
 ## Contributing
