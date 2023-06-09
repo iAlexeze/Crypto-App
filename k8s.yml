@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: current-prices
+  name: crypto-prices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prices
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: prices
+    spec:
+      containers:
+      - image: ialexeze/cryptoprices:1.0.0
+        name: cryptoprices
+        ports:
+        - containerPort: 5000
+        resources: {}
+status: {}
+
+#NodePort service for sxternal access     
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: current-prices
+  name: crypto-svc
+spec:
+  ports:
+  - port: 5000
+    nodePort: 31000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: prices
+  type: NodePort
+status:
+  loadBalancer: {}
