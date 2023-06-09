@@ -1,16 +1,13 @@
-# Crypto-App
+# Crypto-App Repository
 This application fetches the current prices of selected cryptocurrencies using the Coingecko API.
-
-# Docker-Project Repository
-The purpose of this repository is to provide a simple starting point for developers who are new to Docker and want to learn how to run and manage Docker containers.
 
 ## Contents
 
 This repository contains the following directories:
 
-**Docker Setup:** This file contains sample configurations for setting up Docker on your local machine or a remote server.
+**main.py:** This python file contains the source code for the flask-based application.
 
-**k8s:** This file contains sample configurations and code for running microservices in Docker containers.
+**k8s:** This file contains sample configurations of the YAML file for running the application in a kubernetes cluster.
  
 **Dockerfile:** This is a simple Dockerfile for building a Docker image that runs a basic web application.
 
@@ -37,6 +34,9 @@ docker pull ialexeze/cryptoprices:1.0.0
 
 This will pull the application image from DockerHub into your local docker machine.
 
+Either wyas, you should be able to see the images built or pulled, using the command:
+
+docker images
 
 ## Run the Docker container:
 
